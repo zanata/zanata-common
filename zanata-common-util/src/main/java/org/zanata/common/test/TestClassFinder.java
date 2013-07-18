@@ -24,14 +24,16 @@ package org.zanata.common.test;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.scannotation.AnnotationDB;
 import org.scannotation.ClasspathUrlFinder;
 
 import com.dhemery.runtimesuite.ClassFinder;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 
 /**
@@ -72,15 +74,27 @@ public class TestClassFinder implements ClassFinder
       {
          AnnotationDB annotationDB = new AnnotationDB();
          annotationDB.scanArchives(urls);
-         Set<String> classNames = annotationDB.getAnnotationIndex().get(Test.class.getName());
-         if (classNames == null)
+         Set<Class<?>> classes = Sets.newHashSet();
+         Map<String, Set<String>> annotationIndex = annotationDB.getAnnotationIndex();
+         Set<String> testClasses = annotationIndex.get(Test.class.getName());
+         if (testClasses != null)
+         {
+            for (String className : testClasses)
+            {
+               classes.add(Class.forName(className));
+            }
+         }
+         Set<String> runWithClasses = annotationIndex.get(RunWith.class.getName());
+         if (runWithClasses != null)
+         {
+            for (String className : runWithClasses)
+            {
+               classes.add(Class.forName(className));
+            }
+         }
+         if (classes.isEmpty())
          {
             throw new RuntimeException("No test classes found");
-         }
-         Collection<Class<?>> classes = Lists.newArrayList();
-         for (String className : classNames)
-         {
-            classes.add(Class.forName(className));
          }
          return classes;
       }
