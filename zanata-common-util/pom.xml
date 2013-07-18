@@ -42,6 +42,12 @@
 		</dependency>
 
 		<dependency>
+		    <groupId>com.dhemery.runtime-suite</groupId>
+		    <artifactId>core</artifactId>
+		    <version>0.5</version>
+		</dependency>
+
+		<dependency>
 		  <groupId>commons-io</groupId>
 		  <artifactId>commons-io</artifactId>
 		</dependency>
