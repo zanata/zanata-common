@@ -3,7 +3,7 @@
 # Copyright (C) 2006 Gerfried Fuchs <rhonda@debian.org>
 # This file is distributed under the same license as the abook package.
 # Kanru Chen <koster@debian.org.tw>, 2008.
-# 
+#
 # #-#-#-#-#  accerciser_3.4.1-1_zh_TW.po (accerciser 3.1.92)  #-#-#-#-#
 # Traditional Chinese translation of accerciser.
 # Copyright (C) 2001, 2003 Free Software Foundation, Inc.
@@ -153,7 +153,7 @@
 # Rex Tsai <chihchun@linux.org.tw>, 2004-2005
 # Asho Yeh <ashoyeh@gmail.com>, 2008
 #
-# TODO: Use one style of quotes only, currently used: \"...\", '...', “...” 
+# TODO: Use one style of quotes only, currently used: \"...\", '...', “...”
 #
 # #-#-#-#-#  apt-listchanges_2.85.9_zh_TW.po (apt-listchanges)  #-#-#-#-#
 # Traditional Chinese translation to apt-listchanges
@@ -860,7 +860,7 @@
 # traditional Chinese translation of drgeo.
 # Copyright (C) 2003 Free Software Foundation, Inc.
 # Abel Cheung <maddog@linux.org.hk>, 2003.
-# 
+#
 # History
 # "PO-Revision-Date: 2003-08-24 21:08+0800\n"
 # "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
@@ -909,7 +909,7 @@
 # Copyright (C) 2001, 05 Free Software Foundation, Inc.
 # Kun-Chung Hsieh <linuxer@coventive.com>, 2001
 # Wei-Lun Chao <chaoweilun@pcmail.com.tw>, 2005
-# 
+#
 # #-#-#-#-#  ekiga_3.2.7-5_zh_TW.po (ekiga 3.2.6)  #-#-#-#-#
 # Chinese (Hong Kong) translation for ekiga (gnomemeeting).
 # Copyright (C) 2001-07 Free Software Foundation, Inc.
@@ -948,7 +948,7 @@
 # Copyright (C) 2010 The Enna Project
 # This file is distributed under the same license as the enna package.
 #  <sword.huang@gmail.com>, 2010.
-# 
+#
 # msgfmt zh_TW.po -o zh_TW.gmo
 # #-#-#-#-#  eog-plugins_3.4.0-1_zh_TW.po (eog-plugins 2.20)  #-#-#-#-#
 # Chinese (Taiwan) translation of eog-plugins.
@@ -1429,7 +1429,7 @@
 # Abel Cheung <deaddog@deaddog.ws>, 2001.
 #
 # #-#-#-#-#  gemanx-gtk2_0.1.0.3-2_zh_TW.po (zh_TW)  #-#-#-#-#
-# translation of zh_TW.po to 
+# translation of zh_TW.po to
 # PCMan <pcman.tw@gmail.com>, 2005.
 # #-#-#-#-#  genius_1.0.14-1_zh_TW.po (genius 0.7.4)  #-#-#-#-#
 # traditional Chinese translation of genius.
@@ -2632,7 +2632,7 @@
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the jmol package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
-# 
+#
 # #-#-#-#-#  josm_0.0.svn5181+dfsg1-1_zh_TW.po (josm)  #-#-#-#-#
 # Traditional Chinese translation for josm
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
@@ -2858,7 +2858,7 @@
 # #-#-#-#-#  libgnomeprint_2.18.8-3_zh_TW.po (libgnomeprint 2.18.6)  #-#-#-#-#
 # Chinese (Taiwan) translation of libgnomeprint.
 # Copyright (C) 2001, 02, 03, 04, 05 Free Software Foundation, Inc.
-# Translators: 
+# Translators:
 # Abel Cheung <abel@oaka.org>, 2001-2006.
 # Ching-Hung Lin <2billlin@yahoo.com.tw>, 2004
 #
@@ -3056,7 +3056,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # #-#-#-#-#  listen_0.6.5-10_zh_TW.po (listen)  #-#-#-#-#
 # Traditional Chinese translation for listen
 # Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
@@ -4039,7 +4039,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # #-#-#-#-#  pcmanx-gtk2_1.1-2_zh_TW.po (zh_TW)  #-#-#-#-#
-# translation of zh_TW.po to 
+# translation of zh_TW.po to
 # PCMan <pcman.tw@gmail.com>, 2005.
 # #-#-#-#-#  pcsxr_1.9.92-3_zh_TW.po (pcsxr 1.0)  #-#-#-#-#
 # Traditional Chinese translation of pcsxr.
@@ -4052,7 +4052,7 @@
 # Copyright (C) 2008 Phamm Team <team@phamm.org>
 # This file is distributed under the same license as the Phamm package.
 # Kanru Chen <koster@debian.org.tw>, 2008.
-# 
+#
 # #-#-#-#-#  pidgin_2.10.4-1.1_zh_TW.po (Pidgin 2.10.0)  #-#-#-#-#
 # Pidgin's Traditional Chinese translation
 # Copyright (C) 2002-2011, Paladin R. Liu <paladin@ms1.hinet.net>
@@ -4397,7 +4397,7 @@
 # Traditional Chinese translation for mtpaint
 # This file is distributed under the same license as the mtpaint package.
 # Wei-Lun Chao <chaoweilun@pcmail.com.tw>, 2006.
-# 
+#
 # #-#-#-#-#  rhythmbox_2.96-5_zh_TW.po (rhythmbox 2.90.1)  #-#-#-#-#
 # arch-tag: Chinese (Taiwan) translation of Rhythmbox
 # Copyright (C) 2003, 04, 05, 06 Free Software Foundation, Inc.
@@ -5072,16 +5072,16 @@
 # Wei-Lun Chao <chaoweilun@gmail.com>, 2010.
 #
 # #-#-#-#-#  vdr-plugin-femon_1.7.17-2_zh_TW.po (vdr-femon 1.7.17)  #-#-#-#-#
-# VDR plugin language source file. 
-# Copyright (C) 2007 Rolf Ahrenberg 
-# This file is distributed under the same license as the femon package. 
-# Nan Feng VDR <nfgx@21cn.com>, 2009.2 
+# VDR plugin language source file.
+# Copyright (C) 2007 Rolf Ahrenberg
+# This file is distributed under the same license as the femon package.
+# Nan Feng VDR <nfgx@21cn.com>, 2009.2
 #
 # #-#-#-#-#  vdr-plugin-xine_0.9.4-6_zh_TW.po (PACKAGE VERSION)  #-#-#-#-#
-# SOME DESCRIPTIVE TITLE. 
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER 
-# This file is distributed under the same license as the PACKAGE package. 
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR. 
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # #-#-#-#-#  vdr-plugin-xineliboutput_1.0.7+cvs20120419.2159-1_zh_TW.po (Xineliboutput 1.1.0)  #-#-#-#-#
 # SOME DESCRIPTIVE TITLE.
@@ -5226,7 +5226,7 @@
 #
 # #-#-#-#-#  win32-loader_0.7.4.4_zh_TW.po (win32-loader 0.6.0)  #-#-#-#-#
 # Traditional Chinese translation for win32-loader
-# Copyright (C) 2008 Tetralet 
+# Copyright (C) 2008 Tetralet
 # This file is distributed under the same license as the win32-loader package.
 #
 # #-#-#-#-#  wine-unstable_1.3.15-0.1_zh_TW.po (Wine)  #-#-#-#-#
@@ -5549,7 +5549,7 @@
 # glossary at http://www.weather.com.hk/other/wreport.asp
 # and actual weather reports at www.hko.gov.hk
 #
-# Secondary references: 
+# Secondary references:
 # glossary at http://photino.cwb.gov.tw/rdcweb/lib/cd/cd05glos/abv2.txt
 # glossary at http://photino.cwb.gov.tw/rdcweb/lib/h/h_000061.htm
 # http://earth.fg.tp.edu.tw/learn/weather/
