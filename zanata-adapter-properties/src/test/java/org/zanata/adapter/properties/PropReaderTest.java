@@ -64,7 +64,7 @@ public class PropReaderTest {
         Resource docIn =
                 (Resource) unmarshal.unmarshal(new StringReader(sw.toString()));
 
-        PropWriter.write(docIn, TEST_OUTPUT_DIR);
+        PropWriter.writeSource(docIn, TEST_OUTPUT_DIR, PropWriter.CHARSET.Latin1);
 
         assertInputAndOutputDocContentSame(docName);
     }
@@ -88,7 +88,8 @@ public class PropReaderTest {
                 (TranslationsResource) unmarshal.unmarshal(new StringReader(sw
                         .toString()));
 
-        PropWriter.write(null, docIn, TEST_OUTPUT_DIR, "test", locale, false);
+        PropWriter.writeTranslations(null, docIn, TEST_OUTPUT_DIR,
+            "test", locale, PropWriter.CHARSET.Latin1, false);
 
         assertInputAndOutputDocContentSame(docName);
     }
@@ -105,7 +106,7 @@ public class PropReaderTest {
      * @throws MalformedURLException
      */
     private void assertInputAndOutputDocContentSame(String docName)
-            throws FileNotFoundException, IOException, MalformedURLException {
+            throws IOException {
         File newFile =
                 new File(TEST_OUTPUT_DIR.getPath() + File.separator + docName);
         InputStream newStream = newFile.toURI().toURL().openStream();
