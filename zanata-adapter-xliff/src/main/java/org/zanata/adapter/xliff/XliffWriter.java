@@ -137,7 +137,6 @@ public class XliffWriter extends XliffCommon {
                             contextGroupMap.get(contextValues[0]);
                     list.add(new String[] { contextValues[1], contextValues[2] });
                 }
-
             }
 
             for (Map.Entry<String, ArrayList<String[]>> entry : contextGroupMap
@@ -194,8 +193,7 @@ public class XliffWriter extends XliffCommon {
 
         try {
             PathUtil.makeParents(file);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException("Error writing XLIFF file  ", e);
         }
 
@@ -234,8 +232,7 @@ public class XliffWriter extends XliffCommon {
             }
             try {
                 xmlStreamWriter.close();
-            }
-            catch (XMLStreamException e) {
+            } catch (XMLStreamException e) {
                 throw new RuntimeException("Error generating XLIFF file format   ",
                     e);
             }

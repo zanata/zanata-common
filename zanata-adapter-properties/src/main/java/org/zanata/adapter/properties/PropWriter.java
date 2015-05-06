@@ -6,10 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.Charsets;
 import org.fedorahosted.openprops.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +26,18 @@ public class PropWriter {
     private static final Logger log = LoggerFactory.getLogger(PropWriter.class);
 
     public static enum CHARSET {
-        UTF8, // UTF-8
-        Latin1; // ISO-8859-1
+        UTF8(Charsets.UTF_8),
+        Latin1(Charsets.ISO_8859_1);
+
+        private final Charset alias;
+
+        CHARSET(Charset alias) {
+            this.alias = alias;
+        }
+
+        public Charset getAlias() {
+            return alias;
+        }
     }
 
     /**
@@ -34,7 +46,7 @@ public class PropWriter {
      *
      * @param doc
      * @param baseDir
-     * @param charset {@link #CHARSET}
+     * @param charset {@link CHARSET}
      * @throws IOException
      */
     public static void writeSource(final Resource doc, final File baseDir,
@@ -130,8 +142,8 @@ public class PropWriter {
         BufferedOutputStream out =
                 new BufferedOutputStream(new FileOutputStream(file));
         try {
-            if (charset.equals(CHARSET.UTF8)) {
-                Writer writer = new OutputStreamWriter(out, "UTF-8");
+            if (charset.alias.equals(Charsets.UTF_8)) {
+                Writer writer = new OutputStreamWriter(out, Charsets.UTF_8.displayName());
                 props.store(writer, null);
             } else {
                 props.store(out, null);
