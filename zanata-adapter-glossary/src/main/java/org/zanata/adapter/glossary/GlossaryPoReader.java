@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 import org.zanata.common.LocaleId;
+import org.zanata.common.util.GlossaryUtil;
 import org.zanata.rest.dto.Glossary;
 import org.zanata.rest.dto.GlossaryEntry;
 import org.zanata.rest.dto.GlossaryTerm;
@@ -108,11 +109,16 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
                 GlossaryEntry entry = new GlossaryEntry();
                 entry.setSrcLang(srcLang);
 
-                GlossaryTerm srcTerm = new GlossaryTerm();
+                GlossaryTerm srcTerm =
+                        new GlossaryTerm(
+                            GlossaryUtil.getResId(srcLang, message.getMsgid()));
                 srcTerm.setLocale(srcLang);
                 srcTerm.setContent(message.getMsgid());
 
-                GlossaryTerm targetTerm = new GlossaryTerm();
+                GlossaryTerm targetTerm =
+                        new GlossaryTerm(GlossaryUtil.getResId(transLang,
+                            message.getMsgstr()));
+
                 targetTerm.setLocale(transLang);
                 targetTerm.setContent(message.getMsgstr());
 
@@ -128,8 +134,8 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
                     }
                 } else {
                     StringBuilder sb = new StringBuilder();
-                    if (!StringUtils.isEmpty(entry.getSourcereference())) {
-                        sb.append(entry.getSourcereference());
+                    if (!StringUtils.isEmpty(entry.getSourceReference())) {
+                        sb.append(entry.getSourceReference());
                     }
                     if (!StringUtils.isEmpty(StringUtils.join(
                             message.getSourceReferences(), "\n"))) {
@@ -137,7 +143,7 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
                                 message.getSourceReferences(), "\n"));
                     }
 
-                    entry.setSourcereference(sb.toString());
+                    entry.setSourceReference(sb.toString());
 
                     for (String comment : message.getExtractedComments()) {
                         srcTerm.getComments().add(comment);

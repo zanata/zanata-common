@@ -6,3 +6,7 @@
 *.iml
 bin/
 test-output/
+
+# idea
+*.idea/
+*.iml

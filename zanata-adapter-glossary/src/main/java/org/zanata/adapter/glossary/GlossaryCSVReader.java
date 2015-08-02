@@ -33,9 +33,11 @@ import java.util.TreeMap;
 import javax.annotation.Nonnull;
 
 import org.zanata.common.LocaleId;
+import org.zanata.common.util.GlossaryUtil;
 import org.zanata.rest.dto.Glossary;
 import org.zanata.rest.dto.GlossaryEntry;
 import org.zanata.rest.dto.GlossaryTerm;
+import org.zanata.util.HashUtil;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -86,9 +88,15 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
                 entry.setSrcLang(srcLocale);
 
                 for (int x = 0; x < row.length && localeColMap.containsKey(x); x++) {
-                    GlossaryTerm term = new GlossaryTerm();
-                    term.setLocale(localeColMap.get(x));
-                    term.setContent(row[x]);
+                    LocaleId locale = localeColMap.get(x);
+                    String content = row[x];
+
+                    GlossaryTerm term =
+                            new GlossaryTerm(GlossaryUtil.getResId(locale,
+                                content));
+
+                    term.setLocale(locale);
+                    term.setContent(content);
                     if (x == 0) {
                         // this is source term
                         for (int descRow : descriptionMap.keySet()) {
