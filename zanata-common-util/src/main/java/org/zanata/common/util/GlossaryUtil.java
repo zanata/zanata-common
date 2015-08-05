@@ -13,7 +13,7 @@ public class GlossaryUtil {
      * @param locale
      * @param content
      */
-    public static String getResId(LocaleId locale, String content) {
+    public static String getResId(LocaleId locale, String content, String pos, String description) {
         String sep = "\u0000";
         String hashBase = locale + sep + content;
 

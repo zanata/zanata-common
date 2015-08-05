@@ -109,16 +109,11 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
                 GlossaryEntry entry = new GlossaryEntry();
                 entry.setSrcLang(srcLang);
 
-                GlossaryTerm srcTerm =
-                        new GlossaryTerm(
-                            GlossaryUtil.getResId(srcLang, message.getMsgid()));
+                GlossaryTerm srcTerm = new GlossaryTerm();
                 srcTerm.setLocale(srcLang);
                 srcTerm.setContent(message.getMsgid());
 
-                GlossaryTerm targetTerm =
-                        new GlossaryTerm(GlossaryUtil.getResId(transLang,
-                            message.getMsgstr()));
-
+                GlossaryTerm targetTerm = new GlossaryTerm();
                 targetTerm.setLocale(transLang);
                 targetTerm.setContent(message.getMsgstr());
 

@@ -35,7 +35,11 @@
   </repositories>
 
   <properties>
+<<<<<<< HEAD
     <zanata.api.version>3.8.0-SNAPSHOT</zanata.api.version>
+=======
+    <zanata.api.version>3.7.3</zanata.api.version>
+>>>>>>> integration/master
   </properties>
 
   <build>

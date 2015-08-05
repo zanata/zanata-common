@@ -37,7 +37,6 @@ import org.zanata.common.util.GlossaryUtil;
 import org.zanata.rest.dto.Glossary;
 import org.zanata.rest.dto.GlossaryEntry;
 import org.zanata.rest.dto.GlossaryTerm;
-import org.zanata.util.HashUtil;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -91,9 +90,7 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
                     LocaleId locale = localeColMap.get(x);
                     String content = row[x];
 
-                    GlossaryTerm term =
-                            new GlossaryTerm(GlossaryUtil.getResId(locale,
-                                content));
+                    GlossaryTerm term = new GlossaryTerm();
 
                     term.setLocale(locale);
                     term.setContent(content);
@@ -108,8 +105,8 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
                 glossary.getGlossaryEntries().add(entry);
                 entryCount++;
 
-                if (entryCount == batchSize || i == entries.size() - 1) {
-                    glossaries.add(glossary);
+                if (entryCount == batchSize ||
+
                     entryCount = 0;
                     glossary = new Glossary();
                 }
