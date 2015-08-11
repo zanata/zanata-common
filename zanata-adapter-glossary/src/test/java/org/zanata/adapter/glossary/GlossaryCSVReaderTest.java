@@ -45,11 +45,8 @@ public class GlossaryCSVReaderTest {
 
     @Test
     public void extractGlossaryTest1() throws IOException {
-        List<String> commentHeaders = new ArrayList<String>();
-        commentHeaders.add("pos");
-        commentHeaders.add("description");
 
-        GlossaryCSVReader reader = new GlossaryCSVReader(commentHeaders, 300);
+        GlossaryCSVReader reader = new GlossaryCSVReader(300);
 
         File sourceFile =
                 new File("src/test/resources/glossary/translate1.csv");
@@ -73,13 +70,7 @@ public class GlossaryCSVReaderTest {
 
     @Test
     public void extractGlossaryTest2() throws IOException {
-        List<String> commentHeaders = new ArrayList<String>();
-        commentHeaders.add("description1");
-        commentHeaders.add("description2");
-        // this will be ignored
-        commentHeaders.add("description3");
-
-        GlossaryCSVReader reader = new GlossaryCSVReader(commentHeaders, 300);
+        GlossaryCSVReader reader = new GlossaryCSVReader(300);
 
         File sourceFile =
                 new File("src/test/resources/glossary/translate2.csv");

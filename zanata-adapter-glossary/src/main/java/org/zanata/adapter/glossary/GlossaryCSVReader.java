@@ -22,18 +22,14 @@ package org.zanata.adapter.glossary;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 
 import org.zanata.common.LocaleId;
-import org.zanata.common.util.GlossaryUtil;
 import org.zanata.rest.dto.Glossary;
 import org.zanata.rest.dto.GlossaryEntry;
 import org.zanata.rest.dto.GlossaryTerm;
@@ -47,16 +43,15 @@ import au.com.bytecode.opencsv.CSVReader;
  **/
 public class GlossaryCSVReader extends AbstractGlossaryPushReader {
     private final int batchSize;
-    private final List<String> customColNames;
+    private final String POS = "POS";
+    private final String DESC = "DESCRIPTION";
 
     /**
      * This class will close the reader
      *
-     * @param customColNames
      * @param batchSize
      */
-    public GlossaryCSVReader(List<String> customColNames, int batchSize) {
-        this.customColNames = customColNames;
+    public GlossaryCSVReader(int batchSize) {
         this.batchSize = batchSize;
     }
 
@@ -73,7 +68,7 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
 
             validateCSVEntries(entries);
 
-            Map<Integer, String> descriptionMap = setupDescMap(entries);
+            Map<String, Integer> descriptionMap = setupDescMap(entries);
             Map<Integer, LocaleId> localeColMap =
                     setupLocalesMap(entries, descriptionMap);
 
@@ -85,6 +80,8 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
                 String[] row = entries.get(i);
                 GlossaryEntry entry = new GlossaryEntry();
                 entry.setSrcLang(srcLocale);
+                entry.setPos(row[descriptionMap.get(POS)]);
+                entry.setDescription(row[descriptionMap.get(DESC)]);
 
                 for (int x = 0; x < row.length && localeColMap.containsKey(x); x++) {
                     LocaleId locale = localeColMap.get(x);
@@ -94,19 +91,14 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
 
                     term.setLocale(locale);
                     term.setContent(content);
-                    if (x == 0) {
-                        // this is source term
-                        for (int descRow : descriptionMap.keySet()) {
-                            term.getComments().add(row[descRow]);
-                        }
-                    }
+
                     entry.getGlossaryTerms().add(term);
                 }
                 glossary.getGlossaryEntries().add(entry);
                 entryCount++;
 
-                if (entryCount == batchSize ||
-
+                if (entryCount == batchSize || i == entries.size() - 1) {
+                    glossaries.add(glossary);
                     entryCount = 0;
                     glossary = new Glossary();
                 }
@@ -139,15 +131,13 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
     /**
      * Parser reads from all from first row and exclude column from description
      * map. Format of CVS: {source locale},{locale},{locale}...,pos,description
-     * OR Format of CVS: {source
-     * locale},{locale},{locale}...,description1,description2.....
      */
     private Map<Integer, LocaleId> setupLocalesMap(List<String[]> entries,
-            Map<Integer, String> descriptionMap) {
+            Map<String, Integer> descriptionMap) {
         Map<Integer, LocaleId> localeColMap = new HashMap<Integer, LocaleId>();
         String[] headerRow = entries.get(0);
         for (int row = 0; row < headerRow.length
-                && !descriptionMap.containsKey(row); row++) {
+                && !descriptionMap.containsValue(row); row++) {
 
             LocaleId locale = new LocaleId(headerRow[row]);
             localeColMap.put(row, locale);
@@ -155,43 +145,17 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
         return localeColMap;
     }
 
-    private Map<Integer, String> setupDescMap(List<String[]> entries) {
-        Map<Integer, String> descMap = new HashMap<Integer, String>();
+    /**
+     * Read last 2 columns in CSV:
+     * {source locale},{locale},{locale}...,pos,description
+     *
+     * @param entries
+     */
+    private Map<String, Integer> setupDescMap(List<String[]> entries) {
+        Map<String, Integer> descMap = new HashMap<String, Integer>();
         String[] headerRow = entries.get(0);
-
-        for (int row = 0; row < headerRow.length; row++) {
-            for (String optsHeader : customColNames) {
-                if (optsHeader.equals(headerRow[row])) {
-                    descMap.put(row, headerRow[row]);
-                }
-            }
-        }
-        /*
-         * Sort out description map according to the value (header name)
-         */
-        ValueComparator bvc = new ValueComparator(descMap);
-        TreeMap<Integer, String> sorted_map = new TreeMap<Integer, String>(bvc);
-        sorted_map.putAll(descMap);
-
-        return sorted_map;
-    }
-
-   static class ValueComparator implements Comparator<Integer>, Serializable {
-
-      Map<Integer, String> base;
-      public ValueComparator(Map<Integer, String> base) {
-          this.base = base;
-      }
-
-      public int compare(Integer a, Integer b) {
-         String strA = base.get(a);
-         String strB = base.get(b);
-
-         if (strA == null || strB == null) {
-            return (strA == null) ? -1 : 1;
-         }
-
-        return strA.compareTo(strB);
-      }
+        descMap.put(POS, headerRow.length - 2);
+        descMap.put(DESC, headerRow.length - 1);
+        return descMap;
     }
 }

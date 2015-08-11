@@ -56,7 +56,7 @@ public class GlossaryPoReaderTest {
     @Test
     public void extractGlossaryTest() throws IOException {
         GlossaryPoReader reader =
-                new GlossaryPoReader(LocaleId.EN_US, new LocaleId("hi"), false,
+                new GlossaryPoReader(LocaleId.EN_US, new LocaleId("hi"),
                         BATCH_SIZE);
 
         Reader inputStreamReader =
@@ -79,7 +79,7 @@ public class GlossaryPoReaderTest {
     public void glossaryBatchTest() throws IOException {
         GlossaryPoReader reader =
                 new GlossaryPoReader(LocaleId.EN_US, new LocaleId("zh-Hants"),
-                        false, BATCH_SIZE);
+                        BATCH_SIZE);
         Reader inputStreamReader =
                 new InputStreamReader(new FileInputStream(sourceFile2), "UTF-8");
         BufferedReader br = new BufferedReader(inputStreamReader);

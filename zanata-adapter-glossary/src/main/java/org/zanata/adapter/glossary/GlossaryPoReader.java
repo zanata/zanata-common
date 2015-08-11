@@ -27,6 +27,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Joiner;
 import org.apache.commons.io.input.ReaderInputStream;
 import org.apache.commons.lang.StringUtils;
 import org.fedorahosted.tennera.jgettext.Message;
@@ -35,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 import org.zanata.common.LocaleId;
-import org.zanata.common.util.GlossaryUtil;
 import org.zanata.rest.dto.Glossary;
 import org.zanata.rest.dto.GlossaryEntry;
 import org.zanata.rest.dto.GlossaryTerm;
@@ -53,22 +53,19 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
     private final LocaleId srcLang;
     private final LocaleId transLang;
     private final int batchSize;
-    private final boolean treatSourceCommentsAsTarget;
 
     /**
      * This class will close the reader
      *
      * @param srcLang
      * @param transLang
-     * @param treatSourceCommentsAsTarget
      * @param batchSize
      */
     public GlossaryPoReader(LocaleId srcLang, LocaleId transLang,
-            boolean treatSourceCommentsAsTarget, int batchSize) {
+            int batchSize) {
         this.srcLang = srcLang;
         this.transLang = transLang;
         this.batchSize = batchSize;
-        this.treatSourceCommentsAsTarget = treatSourceCommentsAsTarget;
     }
 
     @Override
@@ -117,36 +114,27 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
                 targetTerm.setLocale(transLang);
                 targetTerm.setContent(message.getMsgstr());
 
-                // Treat all comments and source reference as translation
-                // comment
-                if (treatSourceCommentsAsTarget) {
-                    for (String srcRef : message.getSourceReferences()) {
-                        targetTerm.getComments().add(srcRef);
-                    }
-
-                    for (String comment : message.getExtractedComments()) {
-                        targetTerm.getComments().add(comment);
-                    }
-                } else {
-                    StringBuilder sb = new StringBuilder();
-                    if (!StringUtils.isEmpty(entry.getSourceReference())) {
-                        sb.append(entry.getSourceReference());
-                    }
-                    if (!StringUtils.isEmpty(StringUtils.join(
-                            message.getSourceReferences(), "\n"))) {
-                        sb.append(StringUtils.join(
-                                message.getSourceReferences(), "\n"));
-                    }
-
-                    entry.setSourceReference(sb.toString());
-
-                    for (String comment : message.getExtractedComments()) {
-                        srcTerm.getComments().add(comment);
-                    }
+                StringBuilder sb = new StringBuilder();
+                if (!StringUtils.isEmpty(entry.getSourceReference())) {
+                    sb.append(entry.getSourceReference());
                 }
-                for (String comment : message.getComments()) {
-                    targetTerm.getComments().add(comment);
+                if (!StringUtils.isEmpty(StringUtils.join(
+                        message.getSourceReferences(), "\n"))) {
+                    sb.append(StringUtils.join(
+                            message.getSourceReferences(), "\n"));
                 }
+
+                entry.setSourceReference(sb.toString());
+
+                String description = Joiner.on("\n").skipNulls()
+                    .join(message.getExtractedComments());
+
+                entry.setDescription(description);
+
+                String targetComment = Joiner.on("\n").skipNulls()
+                    .join(message.getComments());
+
+                targetTerm.setComment(targetComment);
 
                 entry.getGlossaryTerms().add(srcTerm);
                 entry.getGlossaryTerms().add(targetTerm);
