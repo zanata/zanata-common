@@ -30,7 +30,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import org.zanata.common.LocaleId;
-import org.zanata.rest.dto.Glossary;
 import org.zanata.rest.dto.GlossaryEntry;
 import org.zanata.rest.dto.GlossaryTerm;
 
@@ -55,7 +54,8 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
         this.batchSize = batchSize;
     }
 
-    public List<Glossary> extractGlossary(Reader reader) throws IOException {
+    public List<List<GlossaryEntry>> extractGlossary(Reader reader)
+            throws IOException {
         int entryCount = 0;
         // TODO replace opencsv with apache-commons-csv (a replacement of
         // opencsv and is in fedora maintained by someone)
@@ -63,7 +63,8 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
         // fedora. see http://commons.apache.org/csv/
         CSVReader csvReader = new CSVReader(reader);
         try {
-            List<Glossary> glossaries = new ArrayList<Glossary>();
+            List<List<GlossaryEntry>> glossaries =
+                    new ArrayList<List<GlossaryEntry>>();
             List<String[]> entries = csvReader.readAll();
 
             validateCSVEntries(entries);
@@ -74,7 +75,8 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
 
             LocaleId srcLocale = localeColMap.get(0);
 
-            Glossary glossary = new Glossary();
+            List<GlossaryEntry> glossaryEntries =
+                    new ArrayList<GlossaryEntry>();
 
             for (int i = 1; i < entries.size(); i++) {
                 String[] row = entries.get(i);
@@ -94,13 +96,13 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
 
                     entry.getGlossaryTerms().add(term);
                 }
-                glossary.getGlossaryEntries().add(entry);
+                glossaryEntries.add(entry);
                 entryCount++;
 
                 if (entryCount == batchSize || i == entries.size() - 1) {
-                    glossaries.add(glossary);
+                    glossaries.add(glossaryEntries);
                     entryCount = 0;
-                    glossary = new Glossary();
+                    glossaryEntries = new ArrayList<GlossaryEntry>();
                 }
             }
             return glossaries;

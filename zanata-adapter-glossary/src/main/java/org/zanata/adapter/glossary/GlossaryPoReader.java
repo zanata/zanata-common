@@ -69,7 +69,7 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
     }
 
     @Override
-    public List<Glossary> extractGlossary(Reader reader) throws IOException {
+    public List<List<GlossaryEntry>> extractGlossary(Reader reader) throws IOException {
         ReaderInputStream ris = new ReaderInputStream(reader);
         try {
             InputSource potInputSource = new InputSource(ris);
@@ -80,12 +80,14 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
         }
     }
 
-    private List<Glossary> extractTemplate(InputSource potInputSource) {
+    private List<List<GlossaryEntry>>
+            extractTemplate(InputSource potInputSource) {
         int entryCount = 0;
         MessageStreamParser messageParser = createParser(potInputSource);
-        List<Glossary> glossaries = new ArrayList<Glossary>();
+        List<List<GlossaryEntry>> glossaries =
+                new ArrayList<List<GlossaryEntry>>();
 
-        Glossary glossary = new Glossary();
+        List<GlossaryEntry> glossaryEntries = new ArrayList<GlossaryEntry>();
 
         while (messageParser.hasNext()) {
             Message message = messageParser.next();
@@ -139,14 +141,14 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
                 entry.getGlossaryTerms().add(srcTerm);
                 entry.getGlossaryTerms().add(targetTerm);
 
-                glossary.getGlossaryEntries().add(entry);
+                glossaryEntries.add(entry);
                 entryCount++;
             }
 
             if (entryCount == batchSize || !messageParser.hasNext()) {
-                glossaries.add(glossary);
+                glossaries.add(glossaryEntries);
                 entryCount = 0;
-                glossary = new Glossary();
+                glossaryEntries = new ArrayList<GlossaryEntry>();
             }
         }
         return glossaries;

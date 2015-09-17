@@ -26,12 +26,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.zanata.rest.dto.Glossary;
 import org.zanata.rest.dto.GlossaryEntry;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -55,14 +53,13 @@ public class GlossaryCSVReaderTest {
                 new InputStreamReader(new FileInputStream(sourceFile), "UTF-8");
         BufferedReader br = new BufferedReader(inputStreamReader);
 
-        List<Glossary> glossaries = reader.extractGlossary(br);
+        List<List<GlossaryEntry>> glossaries = reader.extractGlossary(br);
         // System.out.println(glossary);
         assertThat(glossaries.size(), Matchers.equalTo(1));
 
-        assertThat(glossaries.get(0).getGlossaryEntries().size(),
-                Matchers.equalTo(2));
+        assertThat(glossaries.get(0).size(), Matchers.equalTo(2));
 
-        for (GlossaryEntry entry : glossaries.get(0).getGlossaryEntries()) {
+        for (GlossaryEntry entry : glossaries.get(0)) {
             assertThat(entry.getGlossaryTerms().size(), Matchers.equalTo(3));
         }
 
@@ -79,14 +76,14 @@ public class GlossaryCSVReaderTest {
                 new InputStreamReader(new FileInputStream(sourceFile), "UTF-8");
         BufferedReader br = new BufferedReader(inputStreamReader);
 
-        List<Glossary> glossaries = reader.extractGlossary(br);
+        List<List<GlossaryEntry>> glossaries = reader.extractGlossary(br);
         // System.out.println(glossary);
         assertThat(glossaries.size(), Matchers.equalTo(1));
 
-        assertThat(glossaries.get(0).getGlossaryEntries().size(),
+        assertThat(glossaries.get(0).size(),
                 Matchers.equalTo(2));
 
-        for (GlossaryEntry entry : glossaries.get(0).getGlossaryEntries()) {
+        for (GlossaryEntry entry : glossaries.get(0)) {
             assertThat(entry.getGlossaryTerms().size(), Matchers.equalTo(3));
         }
 
