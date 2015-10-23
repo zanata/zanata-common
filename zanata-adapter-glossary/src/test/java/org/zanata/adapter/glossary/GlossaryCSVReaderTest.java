@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.zanata.common.LocaleId;
 import org.zanata.rest.dto.GlossaryEntry;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,10 +42,23 @@ import static org.hamcrest.MatcherAssert.assertThat;
  **/
 public class GlossaryCSVReaderTest {
 
+    @Test(expected = RuntimeException.class)
+    public void testNotMatchingSource() throws IOException {
+        GlossaryCSVReader reader = new GlossaryCSVReader(LocaleId.DE, 300);
+        File sourceFile =
+            new File("src/test/resources/glossary/translate1.csv");
+
+        Reader inputStreamReader =
+            new InputStreamReader(new FileInputStream(sourceFile), "UTF-8");
+        BufferedReader br = new BufferedReader(inputStreamReader);
+
+        List<List<GlossaryEntry>> glossaries = reader.extractGlossary(br);
+    }
+
     @Test
     public void extractGlossaryTest1() throws IOException {
 
-        GlossaryCSVReader reader = new GlossaryCSVReader(300);
+        GlossaryCSVReader reader = new GlossaryCSVReader(LocaleId.EN_US, 300);
 
         File sourceFile =
                 new File("src/test/resources/glossary/translate1.csv");
@@ -54,7 +68,6 @@ public class GlossaryCSVReaderTest {
         BufferedReader br = new BufferedReader(inputStreamReader);
 
         List<List<GlossaryEntry>> glossaries = reader.extractGlossary(br);
-        // System.out.println(glossary);
         assertThat(glossaries.size(), Matchers.equalTo(1));
 
         assertThat(glossaries.get(0).size(), Matchers.equalTo(2));
@@ -67,7 +80,7 @@ public class GlossaryCSVReaderTest {
 
     @Test
     public void extractGlossaryTest2() throws IOException {
-        GlossaryCSVReader reader = new GlossaryCSVReader(300);
+        GlossaryCSVReader reader = new GlossaryCSVReader(LocaleId.EN_US, 300);
 
         File sourceFile =
                 new File("src/test/resources/glossary/translate2.csv");

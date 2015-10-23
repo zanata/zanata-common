@@ -42,6 +42,7 @@ import au.com.bytecode.opencsv.CSVReader;
  **/
 public class GlossaryCSVReader extends AbstractGlossaryPushReader {
     private final int batchSize;
+    private final LocaleId srcLang;
     private final String POS = "POS";
     private final String DESC = "DESCRIPTION";
 
@@ -50,7 +51,8 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
      *
      * @param batchSize
      */
-    public GlossaryCSVReader(int batchSize) {
+    public GlossaryCSVReader(LocaleId srcLang, int batchSize) {
+        this.srcLang = srcLang;
         this.batchSize = batchSize;
     }
 
@@ -74,6 +76,12 @@ public class GlossaryCSVReader extends AbstractGlossaryPushReader {
                     setupLocalesMap(entries, descriptionMap);
 
             LocaleId srcLocale = localeColMap.get(0);
+            
+            if (!srcLang.equals(srcLocale)) {
+                throw new RuntimeException("input source language '" + srcLang
+                        + "' does not match source language in file '"
+                        + srcLocale + "'");
+            }
 
             List<GlossaryEntry> glossaryEntries =
                     new ArrayList<GlossaryEntry>();
