@@ -27,6 +27,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import org.apache.commons.io.input.ReaderInputStream;
 import org.apache.commons.lang.StringUtils;
@@ -70,10 +71,11 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
 
     @Override
     public List<List<GlossaryEntry>> extractGlossary(Reader reader) throws IOException {
-        ReaderInputStream ris = new ReaderInputStream(reader);
+        ReaderInputStream ris =
+                new ReaderInputStream(reader, Charsets.UTF_8.displayName());
         try {
             InputSource potInputSource = new InputSource(ris);
-            potInputSource.setEncoding("utf8");
+            potInputSource.setEncoding(Charsets.UTF_8.displayName());
             return extractTemplate(potInputSource);
         } finally {
             ris.close();
@@ -167,7 +169,7 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
             else
                 messageParser =
                         new MessageStreamParser(inputSource.getByteStream(),
-                                Charset.forName("UTF-8"));
+                            Charsets.UTF_8);
         } else if (inputSource.getSystemId() != null) {
             try {
                 URL url = new URL(inputSource.getSystemId());
@@ -179,7 +181,7 @@ public class GlossaryPoReader extends AbstractGlossaryPushReader {
                 else
                     messageParser =
                             new MessageStreamParser(url.openStream(),
-                                    Charset.forName("UTF-8"));
+                                Charsets.UTF_8);
             } catch (IOException e) {
                 throw new RuntimeException(
                         "failed to get input from url in inputSource", e);
